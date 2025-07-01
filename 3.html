@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rubi P2P Exchange</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="1.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+          
+            <i class="fa-regular fa-gem" style="
+  color: #E0115F; /* Ruby pinkish red */
+  font-size: 24px;
+"></i>
+            
+            
+            <div class="header-title">
+                <span class="express">RUBI</span>
+                <span class="p2p">P2P</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="currency-selector">
+                <span id="currency-display">COUNTRY</span>
+                <img src="https://flagcdn.com/w40/tz.png" alt="Tanzania Flag" style="height: 12px;">
+            </div>
+            <div class="notification-bell">
+                <i class="fas fa-bell"></i>
+                <div class="notification-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-section active" id="home-page">
+        <div class="buy-sell-toggle">
+            <div class="toggle-container">
+                <button class="toggle-btn active" id="buy-btn">SELL AND</button>
+                <button class="toggle-btn inactive" id="sell-btn">BUY RUBI HERE</button>
+            </div>
+        </div>
+        <div class="filter-bar">
+            <div class="filter-options">
+                <div class="filter-option">
+                    <div class="rubi-icon"></div>
+                    <span>RUBI</span>
+                   <i class="fa-solid fa-boxes-stacked"></i>
+                </div>
+                <div class="filter-option">
+                    <span>INVEST</span>
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div class="filter-option">
+                    <span>WIN</span>
+<i class="fa-regular fa-window-restore"></i>
+                </div>
+            </div>
+
+        </div>
+        <div class="traders-container" id="ads-container">
+            <div class="spinner" id="loading-spinner"></div>
+            <div class="error-message" id="error-message"></div>
+        </div>
+    </div>
+
+    <div class="page-section" id="orders-page">
+        <div class="order-tabs">
+            <div class="order-tab active" onclick="switchOrderTab('all')">All</div>
+            <div class="order-tab" onclick="switchOrderTab('pending')">Pending</div>
+            <div class="order-tab" onclick="switchOrderTab('completed')">Completed</div>
+            <div class="order-tab" onclick="switchOrderTab('cancelled')">Cancelled</div>
+        </div>
+        
+      <!--  <div class="order-type-toggle">
+      FUTURE ORDER TYPE HERE
+            <button class="order-type-btn active" onclick="switchOrderType('buy')">Buy Orders</button>
+            <button class="order-type-btn inactive" onclick="switchOrderType('sell')">Sell Orders</button>
+        </div>
+        -->
+      
+        <div class="traders-container" id="orders-container">
+            <div class="spinner" id="orders-spinner"></div>
+            <div class="error-message" id="orders-error"></div>
+        </div>
+    </div>
+
+    <div class="page-section" id="ads-page">
+        <button class="create-ad-btn" onclick="showCreateAdModal()">Create New Ad</button>
+        <div class="ad-type-toggle">
+            <button class="ad-type-btn active
+
+" onclick="switchAdType('buy')">Buy Ads</button>
+            <button class="ad-type-btn inactive" onclick="switchAdType('sell')">Sell Ads</button>
+        </div>
+        <div class="my-ads-list" id="my-ads-container">
+            <div class="spinner" id="my-ads-spinner"></div>
+            <div class="error-message" id="my-ads-error"></div>
+        </div>
+    </div>
+
+    <div class="page-section" id="chat-page">
+        <div class="traders-container">
+            <div style="text-align: center; padding: 50px 0;">
+                <i class="fas fa-comments" style="font-size: 48px; color: #8d9199; margin-bottom: 16px;"></i>
+                <h3 style="margin-bottom: 8px;">No messages yet</h3>
+                <p style="color: #8d9199;">Start a conversation with a trader</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-section" id="profile-page">
+        <div class="traders-container">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profile-avatar">U</div>
+                <div class="profile-info">
+                    <h2 id="profile-name">Loading... 
+
+                    </h2>
+                  
+                    
+                    <p id="profile-join-date">Loading </p>
+                </div>
+            </div>
+            <div class="wallet-card">
+                <div class="wallet-header">
+                    <div class="wallet-title">TSH 
+                    
+                    </div>
+                     
+                    <i class="fa-solid fa-wallet" style="
+  color: red;
+  font-size: 24px;
+"></i>
+                    
+                </div>
+                <div class="wallet-balance" id="usdt-balance">0.00</div>
+                <div class="wallet-currency">TZS</div>
+                <div class="wallet-actions">
+                    <button class="wallet-btn deposit-btn" onclick="showDepositModal()">Deposit</button>
+                    <button class="wallet-btn withdraw-btn" onclick="showWithdrawModal()">Withdraw</button>
+                </div>
+            </div>
+            <div class="wallet-card">
+                <div class="wallet-header">
+                    <div class="wallet-title">RUBI</div>
+                    
+                    <i class="fa-regular fa-gem" style="
+  color: #E0115F; /* Ruby pinkish red */
+  font-size: 24px;
+"></i>
+                    
+                    
+                    
+                </div>
+                <div class="wallet-balance" id="rubi-balance">0.00</div>
+                <div class="wallet-currency">RUBI</div>
+                <div class="wallet-actions">
+                    <button class="wallet-btn deposit-btn" onclick="showDepositRubiModal()">Deposit</button>
+                    <button class="wallet-btn withdraw-btn" onclick="showWithdrawRubiModal()">Withdraw</button>
+                </div>
+            </div>
+            <div style="margin-top: 24px;">
+                <button class="buy-btn" onclick="signOut()">
+                    <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i>
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="order-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="order-modal-title">Buy RUBI</div>
+                <button class="close-btn" onclick="closeModal('order-modal')">×</button>
+            </div>
+            <div class="order-form">
+                <div class="form-group">
+                    <label class="form-label">Amount (RUBI)</label>
+                    <input type="number" class="form-input" id="rubi-amount" placeholder="Enter amount" min="0" step="0.01" oninput="calculateTotal()">
+                </div>
+                <div class="form-group" id="rubi-address-group">
+                    <label class="form-label">Your RUBI Address</label>
+                    <input type="text" class="form-input" id="rubi-address" placeholder="Enter your RUBI wallet address">
+                </div>
+                <div class="form-group" id="phone-number-group" style="display: none;">
+                    <label class="form-label">Receiving Phone Number</label>
+                    <input type="text" class="form-input" id="phone-number" placeholder="Enter phone number">
+                </div>
+                <div class="form-group" id="receiver-name-group" style="display: none;">
+                    <label class="form-label">Receiver Name</label>
+                    <input type="text" class="form-input" id="receiver-name" placeholder="Enter receiver name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Payment Method</label>
+                    <select class="form-select" id="payment-method"></select>
+                </div>
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span class="summary-label">Price</span>
+                        <span class="summary-value" id="order-price">TSh 0.00/RUBI</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Amount</span>
+                        <span class="summary-value" id="summary-amount">0.00 RUBI</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="summary-row">
+                        <span class="summary-label">Total</span>
+                        <span class="summary-value" id="summary-total">TSh 0.00</span>
+                    </div>
+                </div>
+                <button class="confirm-btn" id="confirm-order-btn" disabled onclick="confirmOrder()">Submit</button>
+                <div class="modal-spinner" id="order-modal-spinner"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="create-ad-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Create New Ad</div>
+                <button class="close-btn" onclick="closeModal('create-ad-modal')">×</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Ad Type</label>
+                <select class="form-select" id="ad-type" onchange="updateAvailableAmount()">
+                    <option value="buy">Buy RUBI</option>
+                    <option value="sell">Sell RUBI</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Price (TZS/RUBI)</label>
+                <input type="number" class="form-input" id="ad-price" placeholder="Enter price" min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Minimum Amount (TZS)</label>
+                <input type="number" class="form-input" id="ad-min" placeholder="Enter minimum amount" min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Maximum Amount (TZS)</label>
+                <input type="number" class="form-input" id="ad-max" placeholder="Enter maximum amount" min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select" id="ad-payment">
+                    <option>M-pesa (Vodafone)</option>
+                    <option>Tigo Pesa</option>
+                    <option>Airtel Money</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Available Amount (RUBI)</label>
+                <input type="number" class="form-input" id="ad-available" placeholder="Available amount" readonly>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Time Limit (minutes)</label>
+                <input type="number" class="form-input" id="ad-time" placeholder="Enter time limit" min="5" value="15">
+            </div>
+            <button class="submit-btn" id="create-ad-btn" onclick="createAd()">Create Ad</button>
+            <div class="modal-spinner" id="create-ad-spinner"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="deposit-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Deposit TZS</div>
+                <button class="close-btn" onclick="closeModal('deposit-modal')">×</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Amount (TZS)  </label>
+                <input type="number" class="form-input" id="deposit-amount" placeholder="Enter amount " min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select" id="deposit-method">
+                    <option>M-pesa (Vodafone)</option>
+                    <option>Tigo Pesa</option>
+                    <option>Airtel Money</option>
+                </select>
+            </div>
+            <div class="submit-btn">Fanya malipo sawa na kiasi ulicho weka; ada ni Tsh 1000. Malipo yote kwenye namba <p class="no">0743470389</p> jina DAVID GINANE</div>
+            <button class="submit-btn" id="deposit-btn" onclick="processDeposit()">Submit Payment</button>
+            <div class="modal-spinner" id="deposit-spinner"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="withdraw-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Withdraw USDT</div>
+                <button class="close-btn" onclick="closeModal('withdraw-modal')">×</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Amount (USDT)</label>
+                <input type="number" class="form-input" id="withdraw-amount" placeholder="Enter amount" min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Wallet Address</label>
+                <input type="text" class="form-input" id="wallet-address" placeholder="Enter USDT wallet address">
+            </div>
+            <button class="submit-btn" id="withdraw-btn" onclick="processWithdrawal()">Withdraw</button>
+            <div class="modal-spinner" id="withdraw-spinner"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="deposit-rubi-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Deposit Rubi</div>
+                <button class="close-btn" onclick="closeModal('deposit-rubi-modal')">×</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Amount (Rubi) </label>
+                <input type="number" class="form-input" id="deposit-rubi-amount" placeholder="Enter amount" min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Payment Method</label>
+                <select class="form-select" id="deposit-rubi-method">
+                    <option>M-pesa (Vodafone)</option>
+                    <option>Tigo Pesa</option>
+                    <option>Airtel Money</option>
+                </select>
+            </div>
+            <button class="submit-btn" id="deposit-rubi-btn" onclick="processRubiDeposit()">Submit Payment</button>
+            <div class="submit-btn">Fanya malipo ya ada Tsh 1000 kwenye namba 0743470389 jina DAVID GINANE na tuma rubi kwenye address ili kuweka oda yako <p class="no">
+              0xb2bb1d6669eae
+            6df07021c306133113a292fcc5e</p></div>
+            <div class="modal-spinner" id="deposit-rubi-spinner"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="withdraw-rubi-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Withdraw Rubi</div>
+                <button class="close-btn" onclick="closeModal('withdraw-rubi-modal')">×</button>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Amount (Rubi)</label>
+                <input type="number" class="form-input" id="withdraw-rubi-amount" placeholder="Enter amount" min="0" step="0.01">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="text" class="form-input" id="rubi-phone" placeholder="Enter phone number">
+            </div>
+            <button class="submit-btn" id="withdraw-rubi-btn" onclick="processRubiWithdrawal()">Withdraw</button>
+            <div class="modal-spinner" id="withdraw-rubi-spinner"></div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="#" class="nav-item active" onclick="showPage('home-page')">
+            <i class="fas fa-home nav-icon"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showPage('orders-page')">
+            <i class="fas fa-receipt nav-icon"></i>
+            <span>Orders</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showPage('ads-page')">
+            <i class="fas fa-bullhorn nav-icon"></i>
+            <span>Ads</span>
+        </a>
+        <a href="#" class="nav-item" onclick="showPage('chat-page')">
+            <i class="fas fa-comments nav-icon"></i>
+            <span>Chat</span>
+            <div class="chat-badge"></div>
+        </a>
+        <a href="#" class="nav-item" onclick="showPage('profile-page')">
+            <i class="fas fa-user nav-icon"></i>
+            <span>Profile</span>
+        </a>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
